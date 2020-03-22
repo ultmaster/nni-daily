@@ -6,6 +6,8 @@ name: Build and Publish NNI Package
 on:
   push:
     branches: [ master ]
+  schedule:
+    - cron: '*/0 1 * * *'
 
 jobs:
   deploy:

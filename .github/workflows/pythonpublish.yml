@@ -15,6 +15,7 @@ jobs:
     steps:
     - name: Checkout Microsoft NNI
       uses: actions/checkout@v2
+      run: git fetch --depth=1 origin +refs/tags/*:refs/tags/*
       with:
         repository: microsoft/nni
     - name: Set up Python

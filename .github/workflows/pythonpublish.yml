@@ -14,13 +14,7 @@ jobs:
 
     steps:
     - name: Checkout Microsoft NNI
-      uses: actions/checkout@v2
-      with:
-        repository: microsoft/nni
-    - name: Fetch all tags
-      run: |
-        git fetch --tags --depth=1 origin +refs/tags/*:refs/tags/*
-        git describe --tags --abbrev=0
+      run: git clone https://github.com/microsoft/nni
     - name: Set up Python
       uses: actions/setup-python@v1
       with:
@@ -30,11 +24,11 @@ jobs:
         python -m pip install --upgrade pip
         pip install setuptools wheel twine
     - name: Build and publish
+      working-directory: ./nni/deployment/pypi
       env:
         TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
         TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
       run: |
-        cd deployment/pypi
         sed -ie "s/name = 'nni'/name = 'nni-daily'/" setup.py
         sed -ie 's/node scripts\/build.js/node --max-old-space-size=4096 scripts\/build.js/' ../../src/webui/package.json
         make version_ts=true build

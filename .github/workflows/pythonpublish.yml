@@ -32,5 +32,6 @@ jobs:
       run: |
         cd deployment/pypi
         sed -ie "s/name = 'nni'/name = 'nni-daily'/" setup.py
+        sed -ie 's/node scripts\/build.js/node --max-old-space-size=4096 scripts\/build.js/' ../../src/webui/package.json
         make version_ts=true build
         twine upload dist/*

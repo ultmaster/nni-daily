@@ -33,5 +33,5 @@ jobs:
       run: |
         sed -ie "s/name = 'nni'/name = 'nni-daily'/" setup.py
         sed -ie 's/node scripts\/build.js/node --max-old-space-size=4096 scripts\/build.js/' ../../src/webui/package.json
-        make version_ts=true build
+        make version_ts=true build > /dev/null
         twine upload dist/*
